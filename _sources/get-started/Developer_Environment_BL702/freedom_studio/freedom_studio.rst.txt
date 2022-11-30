@@ -96,17 +96,12 @@ Freedom Studio
 Debug
 ----
 
--  需要将BL_PROG板子通过JTAG 连接上设备，BL_PROG板子与设备通过USB连上电脑，此时电脑能检测到2个USB端口，下载工具 ``zadig`` 其下载地址为 \ ``https://zadig.akeo.ie/``\ 通过工具将串口(较大的串口号)设置为WinUSB，如图所示：
+-  需要将Sipeed RV-Debugger Plus调试板子通过JTAG 连接上设备，调试板与设备通过USB连上电脑, 如图所示：
 
 .. figure:: imgs/image35.png
-   :alt:
+	:width: 4.5in
+   	:alt:
 
-.. figure:: imgs/image34.png
-   :alt:
-   
-.. figure:: imgs/image10.png
-   :alt:
-   
 -  在 ``Freedom Studio`` 中选择 ``Debug Configurations`` 选项;
    选择 ``bl_iot_sdk_debug_freedom_studio_win_bl702`` 配置，设备会复位重新运行;
    选择 ``bl_iot_sdk_debug_freedom_studio_win_attach_bl702`` 配置,表示直接连上设备并不会复位设备,点击相应的Debug按钮进行debug

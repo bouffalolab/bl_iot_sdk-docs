@@ -636,14 +636,157 @@ Cli命令介绍
        :alt:
 
 
+OTA使用说明
+-----------
 
+本文介绍如何对Zigbee设备进行OTA升级，具体包含以下内容：
 
+- `OTA升级流程介绍`_
+- `制作OTA升级文件`_
+- `配置OTA Server`_
+- `OTA升级过程演示`_
 
+文中，使用BL706 ZR作为OTA Client，使用BL706 ZC作为OTA Server。
 
+------------------
+OTA升级流程介绍
+------------------
 
+Zigbee OTA升级流程如下如所示：
 
+   .. figure:: imgs/ota-flow.png
 
+1. Image Notify: OTA Server发送Image Notify通知OTA Client可以开始OTA升级
 
+2. Query Next Image Request: OTA Client收到通知后，发送Query Next Image Request询问是否有可用的升级文件。
+
+   该请求数据包中携带了OTA Client设备的当前运行的固件信息，包括厂商ID(Manufacture Code), 镜像类型(Image Type)，当前版本号(Current File Version)，以及硬件版本号(Hardware Version，可选字段)。
+
+3. Query Next Image Response: OTA Server根据Query Next Image Request中的信息查找是否有匹配的升级文件，并通过回复Query Next Image Response告知OTA Client。
+
+   a. 如果找到匹配的OTA文件，Query Next Image Response中会包含新版固件信息，如新的固件版本号。
+   
+   b. 如果没有找到匹配的文件，则会在该响应数据包中告知Client端没有可用的升级文件(status=NO_IMAGE_AVAILABLE)。
+
+4. Image Block Request & Image Block Response： OTA Server和OTA Client之间传输OTA文件。
+
+   OTA Header部分会首先传输，如果升级过程中发现OTA Client设备在接收了1个或少数几个Image Block Response后，OTA过程便终止了(Client设备发送Upgrad End Request， status=INVALID_IMAGE), 
+   一般是因为收到的OTA Header数据有误或者不符合要求，可以通过以下几点查找原因
+
+   a. 检查Image Block Response中的数据，是否是OTA文件中的header数据。
+   b. 检查Header中的相关版本信息是否正确。
+   c. 检查Header中文件大小是否超出Client设备的存储空间。
+
+5. Upgrade End Request: OTA Client发送该请求告知OTA Server升级过程已结束。
+
+ 在发送该请求之前，OTA Client设备会对收到的OTA文件进行校验(如SHA256 hash, ESCDA签名)，如果校验失败，Upgrade End Request中status字段值为"INVALID IMAGE"，如果校验成功，则status=SUCCESS。
+
+6. Upgrade End Response: OTA Server通过回复Upgrade End Reqeust告知OTA Client设备可以切换到新镜像并指定切换时间。
+
+------------------
+制作OTA升级文件
+------------------
+	
+- OTA 文件格式 
+  
+    .. figure:: imgs/ota-file-format.png
+
+  OTA 文件格式如上图所示，通常OTA文件只需要包含OTA Header和Upgrade Image两部分。
+
+ a. OTA Header: BL Zigbee设备OTA Header包含以下内容
+  
+  .. code:: c
+   
+   struct _zclOtaHeader{
+    uint32_t    fileIdentifier;
+    uint16_t    headerVersion;
+    uint16_t    headerSize;
+    uint16_t    headerFieldControl;
+    uint16_t    manufacturerID;
+    uint16_t    imageType;
+    uint32_t    fileVersion;
+    uint16_t    zigBeeStackVersion;
+    char        headerStr[32];
+    uint32_t    imageSize;
+    uint16_t    minHWVersion;
+    uint16_t    maxHWVersion;
+   };
+	
+ b. Upgrade Image: Zigbee设备固件
+
+  制作BL Zigbee OTA文件时，Upgrade Image使用压缩后的固件(FW_OTA.bin.xz.hash)，该固件可以使用Bouffalo Lab Dev Cube生成。
+  生成方法和烧写Zigbee设备固件方法一致(但不需要连接BL702/706开发板, 可忽略download失败提示)，
+  生成好的压缩固件在Dev Cube的安装目录下可以找到(E.g. D:\\BouffaloLabDevCube-1.6.2-win32\\chips\bl702\ota\\FW_OTA.bin.xz.hash)。
+
+- 生成OTA文件
+
+  可以使用Bouffalo Lab提供的OTA文件生成工具（ota-image-builder.exe）来生成OTA文件，命令行参数如下：
+
+  .. figure:: imgs/ota-image-builder.png
+
+  示例
+  
+  .. figure:: imgs/ota-build-example.png
+
+------------------
+配置OTA Server
+------------------
+
+这里介绍使用BL706开发板作为OTA Server的使用方法。
+
+- 烧写OTA文件到MFG分区
+  
+   .. figure:: imgs/ota-upload.png
+
+   - Chip Erase选择False
+   - Factory Param选择bl_factory_params_IoTKitA_32M.dts
+   - Partition Table根据flash大小选择partition_cfg_1M.toml或partition_cfg_2M.toml
+   - **Firmware Bin 取消勾选**
+   - MFG Bin选择生成好的OTA文件FW_OTA.bin
+   - 点击"Create&Download"
+
+- 加载OTA文件
+- 
+   .. figure:: imgs/ota-load.png
+
+   如上图所示，在开发板上输入"zb_zcl_ota_load_ota_image" CLI命令加载OTA文件。
+
+----------------------
+OTA升级过程演示
+----------------------
+
+- 第一步：生成OTA文件
+  
+- 第二步：配置OTA Server
+  
+- 第三步：发送Image Notify通知Client设备开始升级
+  
+  .. figure:: imgs/ota-notify.png
+
+  OTA Server端输入"zb_zcl_ota_image_notify 0x89b5 1 1 0x00 10" CLI命令来发送Image Notify， 其中0x89b5为OTA Client短地址。
+
+- 第四步：OTA Client询问OTA Server是否有可升级的OTA文件
+ a. OTA Server端串口会打印收到的Query Next Image Request请求：
+  
+  ImageQueryReq: srcAddr=0x89b5, fileVersion=0x00000001, imageType=0x0000, manufactureCode=0x130d
+
+ b. OTA Server端串口会打印OTA文件匹配结果并发送Query Next Image Response，如果没有匹配的ota文件，则status=0x98(NO_IMAGE_AVALIABLE)：
+  
+  ImageQueryResp: srcAddr=0x89b5, status=0x00
+
+- 第五步：传输OTA文件
+
+ a. OTA Server端串口会打印收到的Image Block Reqeust
+
+   .. figure:: imgs/ota-srv-progress.png
+
+ b. OTA Client端串口会打印OTA升级进度
+
+     .. figure:: imgs/ota-client-progress.png
+
+- 第六步：OTA文件传输完毕后，OTA Client会对OTA文件进行SHA256 hash校验，校验成功会切换到新image
+  
+  .. figure:: imgs/ota-succ.png
 
 
 

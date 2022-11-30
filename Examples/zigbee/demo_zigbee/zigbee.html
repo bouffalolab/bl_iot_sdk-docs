@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Zigbee &mdash; BL IoT SDK release_bl_iot_sdk_1.6.36 文档</title>
+  <title>Zigbee &mdash; BL IoT SDK release_bl_iot_sdk_1.6.39-238-gf5ba0a7ee 文档</title>
   
 
   
@@ -39,7 +39,7 @@
         <link rel="index" title="索引"
               href="../../../genindex.html"/>
         <link rel="search" title="搜索" href="../../../search.html"/>
-    <link rel="top" title="BL IoT SDK release_bl_iot_sdk_1.6.36 文档" href="../../../index.html"/>
+    <link rel="top" title="BL IoT SDK release_bl_iot_sdk_1.6.39-238-gf5ba0a7ee 文档" href="../../../index.html"/>
         <link rel="up" title="(BL702)" href="../index.html"/>
         <link rel="next" title="Peripherals" href="../../peripheral/index.html"/>
         <link rel="prev" title="(BL702)" href="../index.html"/> 
@@ -74,7 +74,7 @@
             
             
               <div class="version">
-                release_bl_iot_sdk_1.6.36
+                release_bl_iot_sdk_1.6.39-238-gf5ba0a7ee
               </div>
             
           
@@ -107,6 +107,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#id1">总览</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#id2">使用步骤</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#cli">Cli命令介绍</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ota">OTA使用说明</a></li>
 </ul>
 </li>
 </ul>
@@ -1189,6 +1190,196 @@
 </div></blockquote>
 </div>
 </div>
+<div class="section" id="ota">
+<h2>OTA使用说明<a class="headerlink" href="#ota" title="永久链接至标题"></a></h2>
+<p>本文介绍如何对Zigbee设备进行OTA升级，具体包含以下内容：</p>
+<ul class="simple">
+<li><a class="reference internal" href="#id3">OTA升级流程介绍</a></li>
+<li><a class="reference internal" href="#id4">制作OTA升级文件</a></li>
+<li><a class="reference internal" href="#ota-server">配置OTA Server</a></li>
+<li><a class="reference internal" href="#id5">OTA升级过程演示</a></li>
+</ul>
+<p>文中，使用BL706 ZR作为OTA Client，使用BL706 ZC作为OTA Server。</p>
+<div class="section" id="id3">
+<h3>OTA升级流程介绍<a class="headerlink" href="#id3" title="永久链接至标题"></a></h3>
+<p>Zigbee OTA升级流程如下如所示：</p>
+<blockquote>
+<div><div class="figure">
+<img alt="../../../_images/ota-flow.png" src="../../../_images/ota-flow.png" />
+</div>
+</div></blockquote>
+<ol class="arabic">
+<li><p class="first">Image Notify: OTA Server发送Image Notify通知OTA Client可以开始OTA升级</p>
+</li>
+<li><p class="first">Query Next Image Request: OTA Client收到通知后，发送Query Next Image Request询问是否有可用的升级文件。</p>
+<p>该请求数据包中携带了OTA Client设备的当前运行的固件信息，包括厂商ID(Manufacture Code), 镜像类型(Image Type)，当前版本号(Current File Version)，以及硬件版本号(Hardware Version，可选字段)。</p>
+</li>
+<li><p class="first">Query Next Image Response: OTA Server根据Query Next Image Request中的信息查找是否有匹配的升级文件，并通过回复Query Next Image Response告知OTA Client。</p>
+<ol class="loweralpha simple">
+<li>如果找到匹配的OTA文件，Query Next Image Response中会包含新版固件信息，如新的固件版本号。</li>
+<li>如果没有找到匹配的文件，则会在该响应数据包中告知Client端没有可用的升级文件(status=NO_IMAGE_AVAILABLE)。</li>
+</ol>
+</li>
+<li><p class="first">Image Block Request &amp; Image Block Response： OTA Server和OTA Client之间传输OTA文件。</p>
+<p>OTA Header部分会首先传输，如果升级过程中发现OTA Client设备在接收了1个或少数几个Image Block Response后，OTA过程便终止了(Client设备发送Upgrad End Request， status=INVALID_IMAGE),
+一般是因为收到的OTA Header数据有误或者不符合要求，可以通过以下几点查找原因</p>
+<ol class="loweralpha simple">
+<li>检查Image Block Response中的数据，是否是OTA文件中的header数据。</li>
+<li>检查Header中的相关版本信息是否正确。</li>
+<li>检查Header中文件大小是否超出Client设备的存储空间。</li>
+</ol>
+</li>
+<li><p class="first">Upgrade End Request: OTA Client发送该请求告知OTA Server升级过程已结束。</p>
+</li>
+</ol>
+<blockquote>
+<div>在发送该请求之前，OTA Client设备会对收到的OTA文件进行校验(如SHA256 hash, ESCDA签名)，如果校验失败，Upgrade End Request中status字段值为&quot;INVALID IMAGE&quot;，如果校验成功，则status=SUCCESS。</div></blockquote>
+<ol class="arabic simple" start="6">
+<li>Upgrade End Response: OTA Server通过回复Upgrade End Reqeust告知OTA Client设备可以切换到新镜像并指定切换时间。</li>
+</ol>
+</div>
+<div class="section" id="id4">
+<h3>制作OTA升级文件<a class="headerlink" href="#id4" title="永久链接至标题"></a></h3>
+<ul>
+<li><p class="first">OTA 文件格式</p>
+<blockquote>
+<div><div class="figure">
+<img alt="../../../_images/ota-file-format.png" src="../../../_images/ota-file-format.png" />
+</div>
+</div></blockquote>
+<p>OTA 文件格式如上图所示，通常OTA文件只需要包含OTA Header和Upgrade Image两部分。</p>
+</li>
+</ul>
+<blockquote>
+<div><ol class="loweralpha simple">
+<li>OTA Header: BL Zigbee设备OTA Header包含以下内容</li>
+</ol>
+<blockquote>
+<div><div class="code c highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">struct</span> <span class="n">_zclOtaHeader</span><span class="p">{</span>
+ <span class="n">uint32_t</span>    <span class="n">fileIdentifier</span><span class="p">;</span>
+ <span class="n">uint16_t</span>    <span class="n">headerVersion</span><span class="p">;</span>
+ <span class="n">uint16_t</span>    <span class="n">headerSize</span><span class="p">;</span>
+ <span class="n">uint16_t</span>    <span class="n">headerFieldControl</span><span class="p">;</span>
+ <span class="n">uint16_t</span>    <span class="n">manufacturerID</span><span class="p">;</span>
+ <span class="n">uint16_t</span>    <span class="n">imageType</span><span class="p">;</span>
+ <span class="n">uint32_t</span>    <span class="n">fileVersion</span><span class="p">;</span>
+ <span class="n">uint16_t</span>    <span class="n">zigBeeStackVersion</span><span class="p">;</span>
+ <span class="n">char</span>        <span class="n">headerStr</span><span class="p">[</span><span class="mi">32</span><span class="p">];</span>
+ <span class="n">uint32_t</span>    <span class="n">imageSize</span><span class="p">;</span>
+ <span class="n">uint16_t</span>    <span class="n">minHWVersion</span><span class="p">;</span>
+ <span class="n">uint16_t</span>    <span class="n">maxHWVersion</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</div></blockquote>
+<ol class="loweralpha simple" start="2">
+<li>Upgrade Image: Zigbee设备固件</li>
+</ol>
+<blockquote>
+<div>制作BL Zigbee OTA文件时，Upgrade Image使用压缩后的固件(FW_OTA.bin.xz.hash)，该固件可以使用Bouffalo Lab Dev Cube生成。
+生成方法和烧写Zigbee设备固件方法一致(但不需要连接BL702/706开发板, 可忽略download失败提示)，
+生成好的压缩固件在Dev Cube的安装目录下可以找到(E.g. D:\BouffaloLabDevCube-1.6.2-win32\chipsbl702ota\FW_OTA.bin.xz.hash)。</div></blockquote>
+</div></blockquote>
+<ul>
+<li><p class="first">生成OTA文件</p>
+<p>可以使用Bouffalo Lab提供的OTA文件生成工具（ota-image-builder.exe）来生成OTA文件，命令行参数如下：</p>
+<div class="figure">
+<img alt="../../../_images/ota-image-builder.png" src="../../../_images/ota-image-builder.png" />
+</div>
+<p>示例</p>
+<div class="figure">
+<img alt="../../../_images/ota-build-example.png" src="../../../_images/ota-build-example.png" />
+</div>
+</li>
+</ul>
+</div>
+<div class="section" id="ota-server">
+<h3>配置OTA Server<a class="headerlink" href="#ota-server" title="永久链接至标题"></a></h3>
+<p>这里介绍使用BL706开发板作为OTA Server的使用方法。</p>
+<ul>
+<li><p class="first">烧写OTA文件到MFG分区</p>
+<blockquote>
+<div><div class="figure">
+<img alt="../../../_images/ota-upload.png" src="../../../_images/ota-upload.png" />
+</div>
+<ul class="simple">
+<li>Chip Erase选择False</li>
+<li>Factory Param选择bl_factory_params_IoTKitA_32M.dts</li>
+<li>Partition Table根据flash大小选择partition_cfg_1M.toml或partition_cfg_2M.toml</li>
+<li><strong>Firmware Bin 取消勾选</strong></li>
+<li>MFG Bin选择生成好的OTA文件FW_OTA.bin</li>
+<li>点击&quot;Create&amp;Download&quot;</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first">加载OTA文件</p>
+</li>
+<li><div class="first figure">
+<img alt="../../../_images/ota-load.png" src="../../../_images/ota-load.png" />
+</div>
+<p>如上图所示，在开发板上输入&quot;zb_zcl_ota_load_ota_image&quot; CLI命令加载OTA文件。</p>
+</li>
+</ul>
+</div>
+<div class="section" id="id5">
+<h3>OTA升级过程演示<a class="headerlink" href="#id5" title="永久链接至标题"></a></h3>
+<ul>
+<li><p class="first">第一步：生成OTA文件</p>
+</li>
+<li><p class="first">第二步：配置OTA Server</p>
+</li>
+<li><p class="first">第三步：发送Image Notify通知Client设备开始升级</p>
+<div class="figure">
+<img alt="../../../_images/ota-notify.png" src="../../../_images/ota-notify.png" />
+</div>
+<p>OTA Server端输入&quot;zb_zcl_ota_image_notify 0x89b5 1 1 0x00 10&quot; CLI命令来发送Image Notify， 其中0x89b5为OTA Client短地址。</p>
+</li>
+<li><p class="first">第四步：OTA Client询问OTA Server是否有可升级的OTA文件</p>
+</li>
+</ul>
+<blockquote>
+<div><ol class="loweralpha simple">
+<li>OTA Server端串口会打印收到的Query Next Image Request请求：</li>
+</ol>
+<blockquote>
+<div>ImageQueryReq: srcAddr=0x89b5, fileVersion=0x00000001, imageType=0x0000, manufactureCode=0x130d</div></blockquote>
+<ol class="loweralpha simple" start="2">
+<li>OTA Server端串口会打印OTA文件匹配结果并发送Query Next Image Response，如果没有匹配的ota文件，则status=0x98(NO_IMAGE_AVALIABLE)：</li>
+</ol>
+<blockquote>
+<div>ImageQueryResp: srcAddr=0x89b5, status=0x00</div></blockquote>
+</div></blockquote>
+<ul class="simple">
+<li>第五步：传输OTA文件</li>
+</ul>
+<blockquote>
+<div><ol class="loweralpha simple">
+<li>OTA Server端串口会打印收到的Image Block Reqeust</li>
+</ol>
+<blockquote>
+<div><div class="figure">
+<img alt="../../../_images/ota-srv-progress.png" src="../../../_images/ota-srv-progress.png" />
+</div>
+</div></blockquote>
+<ol class="loweralpha" start="2">
+<li><p class="first">OTA Client端串口会打印OTA升级进度</p>
+<blockquote>
+<div><div class="figure">
+<img alt="../../../_images/ota-client-progress.png" src="../../../_images/ota-client-progress.png" />
+</div>
+</div></blockquote>
+</li>
+</ol>
+</div></blockquote>
+<ul>
+<li><p class="first">第六步：OTA文件传输完毕后，OTA Client会对OTA文件进行SHA256 hash校验，校验成功会切换到新image</p>
+<div class="figure">
+<img alt="../../../_images/ota-succ.png" src="../../../_images/ota-succ.png" />
+</div>
+</li>
+</ul>
+</div>
+</div>
 </div>
 
 
@@ -1232,7 +1423,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../',
-            VERSION:'release_bl_iot_sdk_1.6.36',
+            VERSION:'release_bl_iot_sdk_1.6.39-238-gf5ba0a7ee',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,
