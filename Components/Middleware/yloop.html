@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>yloop &mdash; BL IoT SDK release_bl_iot_sdk_1.6.39-238-gf5ba0a7ee 文档</title>
+  <title>yloop &mdash; BL IoT SDK release_bl_iot_sdk_1.6.40-726-g0f9d027d5 文档</title>
   
 
   
@@ -39,7 +39,7 @@
         <link rel="index" title="索引"
               href="../../genindex.html"/>
         <link rel="search" title="搜索" href="../../search.html"/>
-    <link rel="top" title="BL IoT SDK release_bl_iot_sdk_1.6.39-238-gf5ba0a7ee 文档" href="../../index.html"/>
+    <link rel="top" title="BL IoT SDK release_bl_iot_sdk_1.6.40-726-g0f9d027d5 文档" href="../../index.html"/>
         <link rel="up" title="&lt;no title&gt;" href="index.html"/>
         <link rel="next" title="AOS VFS" href="vfs.html"/>
         <link rel="prev" title="&lt;no title&gt;" href="index.html"/> 
@@ -74,7 +74,7 @@
             
             
               <div class="version">
-                release_bl_iot_sdk_1.6.39-238-gf5ba0a7ee
+                release_bl_iot_sdk_1.6.40-726-g0f9d027d5
               </div>
             
           
@@ -82,7 +82,7 @@
           
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
-    <input type="text" name="q" placeholder="在文档中搜索" />
+    <input type="text" name="q" placeholder="搜索文档" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -365,17 +365,17 @@ Things自带的协议栈又暴露一个特殊的eventfd接口，Yloop利用此�
 <div class="code c highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">static</span> <span class="n">void</span> <span class="n">event_cb_wifi_event</span><span class="p">(</span><span class="n">input_event_t</span> <span class="o">*</span><span class="n">event</span><span class="p">,</span> <span class="n">void</span> <span class="o">*</span><span class="n">private_data</span><span class="p">)</span>
 <span class="p">{</span>
     <span class="n">switch</span> <span class="p">(</span>
-        <span class="n">case</span> <span class="n">CODE_WIFI_ON_INIT_DONE</span><span class="p">:</span>
+        <span class="k">case</span> <span class="n">CODE_WIFI_ON_INIT_DONE</span><span class="p">:</span>
         <span class="p">{</span>
             <span class="n">printf</span><span class="p">(</span><span class="s2">&quot;[APP] [EVT] CODE_WIFI_ON_INIT_DONE %lld</span><span class="se">\r\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">aos_now_ms</span><span class="p">());</span>
         <span class="p">}</span>
         <span class="k">break</span><span class="p">;</span>
-        <span class="n">case</span> <span class="n">CODE_WIFI_ON_PRE_GOT_IP</span><span class="p">:</span>
+        <span class="k">case</span> <span class="n">CODE_WIFI_ON_PRE_GOT_IP</span><span class="p">:</span>
         <span class="p">{</span>
             <span class="n">printf</span><span class="p">(</span><span class="s2">&quot;[APP] [EVT] connected %lld</span><span class="se">\r\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">aos_now_ms</span><span class="p">());</span>
         <span class="p">}</span>
         <span class="k">break</span><span class="p">;</span>
-        <span class="n">case</span> <span class="n">CODE_WIFI_ON_GOT_IP</span><span class="p">:</span>
+        <span class="k">case</span> <span class="n">CODE_WIFI_ON_GOT_IP</span><span class="p">:</span>
         <span class="p">{</span>
             <span class="n">printf</span><span class="p">(</span><span class="s2">&quot;[APP] [EVT] GOT IP %lld</span><span class="se">\r\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">aos_now_ms</span><span class="p">());</span>
         <span class="p">}</span>
@@ -500,7 +500,7 @@ Things自带的协议栈又暴露一个特殊的eventfd接口，Yloop利用此�
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'release_bl_iot_sdk_1.6.39-238-gf5ba0a7ee',
+            VERSION:'release_bl_iot_sdk_1.6.40-726-g0f9d027d5',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,

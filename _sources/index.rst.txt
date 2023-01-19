@@ -13,20 +13,20 @@ BL 编程指南
 .. _快速入门: get-started/index_602.html
 
 .. |API 参考| image:: ../_static/api-reference.png
-.. _API 参考: get-started/index_702.html
+.. _API 参考: api-reference/index.html
 
 .. |Example| image:: ../_static/api-reference.png
-.. _Example: api-reference/index.html
+.. _Example: Examples/index.html
 
 
 .. |Components| image:: ../_static/api-reference.png
-.. _Components: Examples/index.html
+.. _Components: Components/index.html
 
 .. |QA| image:: ../_static/api-reference.png
-.. _QA: Components/index.html
+.. _QA: QA/index.html
 
 .. |H/W参考| image:: ../_static/api-reference.png
-.. _H/W参考: QA/index.html
+.. _H/W参考: hw-reference/index.html
 
 
 .. toctree::

@@ -11,7 +11,7 @@ Zigbee
 使用步骤
 -----------
 
-- 进入 ``customer_app/bl702_demo_event`` 工程并通过 ``genzb`` 脚本命令编译，完成后下载Bin文件；
+- 进入 ``customer_app/bl702_demo_event`` 工程并通过 ``genzb`` 脚本命令编译，完成后下载Bin文件，toml文件对应customer_app/bl702_demo_event/partition_cfg_1M_NoOta.toml；
 - 1. Device1 使用 ``zb_register_dev 1 0x0104 0x0007 0x00 0x07 0x0000 0x0003 0x0004 0x0005 0x0006 0x0008 0x0300`` 命令注册 endpoint 1, profile id 为0x0104, device id为0x0007, input cluster 0个, output cluster 7个
 
     .. figure:: imgs/ZC-RegisterEP.png

@@ -4,7 +4,7 @@ BL IOT SDK 开发指南
 概述  
 -----------
 
-  `BL70X <https://www.bouffalolab.com/bl70X>`_ 系列芯片是博流智能科技有限公司开发的，基于 SiFive E24 Core `RISC-V <https://en.wikipedia.org/wiki/RISC-V>`_ 处理器的通用微控制器，具有高达144M Hz的主频以及丰富的外设，同时支持BLE 5.0、Zigbee3.0 和以太网等网络功能，可被广泛应用于 `IoT <https://en.wikipedia.org/wiki/Internet_of_things>`_ 和其他低功耗领域中。  
+  BL70X系列芯片是博流智能科技有限公司开发的，基于 `RISC-V <https://en.wikipedia.org/wiki/RISC-V>`_ 处理器的通用微控制器，具有高达144M Hz的主频以及丰富的外设，同时支持BLE 5.0、Zigbee3.0 和以太网等网络功能，可被广泛应用于IoT和其他低功耗领域中。  
 
   `BL IOT SDK <https://github.com/bouffalolab/bl_iot_sdk>`_ 是博流团队专为BL60X, BL70X 以及后续芯片提供的 IOT 软件开发包。
   
@@ -109,6 +109,7 @@ JTAG 连接
     * **helloworld.elf：** 可执行与链接文件，用于调试软件
 
     * **helloworld.map：** 映射文件，用于函数以及内存占用等分析。
+
        `Bouffalo Lab Parse Tool For Windows <https://dev.bouffalolab.com/download>`_ 是博流团队提供的 map 文件解析软件，可用于内存文件分析。   
             
     .. figure:: ./Developer_Environment_BL702/Windows-BL702/imgs/image18.png
@@ -119,7 +120,7 @@ JTAG 连接
 烧录固件
 ---------
     
-  本部分介绍如何使用 **BLDevCube**  集成开发工具将固件烧写入 BL70X开发板，更多详情请参考 `BLDevCube 用户手册 <https://dev.bouffalolab.com/media/upload/doc/DevCube%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8Cv1.2.pdf>`_ 
+  本部分介绍如何使用 **BLDevCube**  集成开发工具将固件烧写入 BL70X开发板。
 
 1. 芯片进入烧写模式 
 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>

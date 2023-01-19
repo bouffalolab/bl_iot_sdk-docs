@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>BL IOT SDK 开发指南 &mdash; BL IoT SDK release_bl_iot_sdk_1.6.39-238-gf5ba0a7ee 文档</title>
+  <title>BL IOT SDK 开发指南 &mdash; BL IoT SDK release_bl_iot_sdk_1.6.40-726-g0f9d027d5 文档</title>
   
 
   
@@ -39,7 +39,7 @@
         <link rel="index" title="索引"
               href="../genindex.html"/>
         <link rel="search" title="搜索" href="../search.html"/>
-    <link rel="top" title="BL IoT SDK release_bl_iot_sdk_1.6.39-238-gf5ba0a7ee 文档" href="../index.html"/>
+    <link rel="top" title="BL IoT SDK release_bl_iot_sdk_1.6.40-726-g0f9d027d5 文档" href="../index.html"/>
         <link rel="next" title="BL602 API 参考" href="../api-reference/index.html"/>
         <link rel="prev" title="快速入门" href="index_602.html"/> 
 
@@ -73,7 +73,7 @@
             
             
               <div class="version">
-                release_bl_iot_sdk_1.6.39-238-gf5ba0a7ee
+                release_bl_iot_sdk_1.6.40-726-g0f9d027d5
               </div>
             
           
@@ -81,7 +81,7 @@
           
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="在文档中搜索" />
+    <input type="text" name="q" placeholder="搜索文档" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -109,11 +109,11 @@
 <li class="toctree-l2"><a class="reference internal" href="#id6">编译工程</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#id7">烧录固件</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#id8">1. 芯片进入烧写模式</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id9">2. 使用BLDevCube下载固件</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id10">3. 运行固件</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bldevcube">2. 使用BLDevCube下载固件</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id9">3. 运行固件</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#id11">调试软件</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id10">调试软件</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../api-reference/index.html">BL602 API 参考</a></li>
@@ -192,7 +192,7 @@
 <div class="section" id="id1">
 <h2>概述<a class="headerlink" href="#id1" title="永久链接至标题"></a></h2>
 <blockquote>
-<div><p><a class="reference external" href="https://www.bouffalolab.com/bl70X">BL70X</a> 系列芯片是博流智能科技有限公司开发的，基于 SiFive E24 Core <a class="reference external" href="https://en.wikipedia.org/wiki/RISC-V">RISC-V</a> 处理器的通用微控制器，具有高达144M Hz的主频以及丰富的外设，同时支持BLE 5.0、Zigbee3.0 和以太网等网络功能，可被广泛应用于 <a class="reference external" href="https://en.wikipedia.org/wiki/Internet_of_things">IoT</a> 和其他低功耗领域中。</p>
+<div><p>BL70X系列芯片是博流智能科技有限公司开发的，基于 <a class="reference external" href="https://en.wikipedia.org/wiki/RISC-V">RISC-V</a> 处理器的通用微控制器，具有高达144M Hz的主频以及丰富的外设，同时支持BLE 5.0、Zigbee3.0 和以太网等网络功能，可被广泛应用于IoT和其他低功耗领域中。</p>
 <p><a class="reference external" href="https://github.com/bouffalolab/bl_iot_sdk">BL IOT SDK</a> 是博流团队专为BL60X, BL70X 以及后续芯片提供的 IOT 软件开发包。</p>
 <p>本文通过一个简单的示例展示如何在Windows环境下，搭建开发环境，编译示例代码、烧录固件以及查看输出，旨在指导用户搭建一套完整的BL70X IOT应用开发环境。</p>
 </div></blockquote>
@@ -315,13 +315,15 @@
 <li>编译完成后，当前目录新增 <code class="docutils literal notranslate"><span class="pre">build_out</span></code> 文件夹以及以下文件：</li>
 </ol>
 <blockquote>
-<div><ul class="simple">
-<li><strong>helloworld.bin：</strong> 二进制固件，用于烧录入芯片</li>
-<li><strong>helloworld.elf：</strong> 可执行与链接文件，用于调试软件</li>
-<li><dl class="first docutils">
-<dt><strong>helloworld.map：</strong> 映射文件，用于函数以及内存占用等分析。</dt>
-<dd><a class="reference external" href="https://dev.bouffalolab.com/download">Bouffalo Lab Parse Tool For Windows</a> 是博流团队提供的 map 文件解析软件，可用于内存文件分析。</dd>
-</dl>
+<div><ul>
+<li><p class="first"><strong>helloworld.bin：</strong> 二进制固件，用于烧录入芯片</p>
+</li>
+<li><p class="first"><strong>helloworld.elf：</strong> 可执行与链接文件，用于调试软件</p>
+</li>
+<li><p class="first"><strong>helloworld.map：</strong> 映射文件，用于函数以及内存占用等分析。</p>
+<blockquote>
+<div><p><a class="reference external" href="https://dev.bouffalolab.com/download">Bouffalo Lab Parse Tool For Windows</a> 是博流团队提供的 map 文件解析软件，可用于内存文件分析。</p>
+</div></blockquote>
 </li>
 </ul>
 <div class="figure align-center">
@@ -333,7 +335,7 @@
 <div class="section" id="id7">
 <h2>烧录固件<a class="headerlink" href="#id7" title="永久链接至标题"></a></h2>
 <blockquote>
-<div>本部分介绍如何使用 <strong>BLDevCube</strong>  集成开发工具将固件烧写入 BL70X开发板，更多详情请参考 <a class="reference external" href="https://dev.bouffalolab.com/media/upload/doc/DevCube%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8Cv1.2.pdf">BLDevCube 用户手册</a></div></blockquote>
+<div>本部分介绍如何使用 <strong>BLDevCube</strong>  集成开发工具将固件烧写入 BL70X开发板。</div></blockquote>
 <div class="section" id="id8">
 <h3>1. 芯片进入烧写模式<a class="headerlink" href="#id8" title="永久链接至标题"></a></h3>
 <blockquote>
@@ -355,8 +357,8 @@
 </div>
 </div></blockquote>
 </div>
-<div class="section" id="id9">
-<h3>2. 使用BLDevCube下载固件<a class="headerlink" href="#id9" title="永久链接至标题"></a></h3>
+<div class="section" id="bldevcube">
+<h3>2. 使用BLDevCube下载固件<a class="headerlink" href="#bldevcube" title="永久链接至标题"></a></h3>
 <blockquote>
 <div><p>2.1 打开 <code class="docutils literal notranslate"><span class="pre">BLDevCube.exe</span></code>, 在 <code class="docutils literal notranslate"><span class="pre">Chip</span> <span class="pre">Type</span></code> 的下拉框中选择 <code class="docutils literal notranslate"><span class="pre">BL702\4\6</span></code>，点击 <code class="docutils literal notranslate"><span class="pre">Finish</span></code> 进入 <code class="docutils literal notranslate"><span class="pre">Dev</span> <span class="pre">Cube</span></code> 主界面</p>
 <blockquote>
@@ -405,8 +407,8 @@
 </div></blockquote>
 </div></blockquote>
 </div>
-<div class="section" id="id10">
-<h3>3. 运行固件<a class="headerlink" href="#id10" title="永久链接至标题"></a></h3>
+<div class="section" id="id9">
+<h3>3. 运行固件<a class="headerlink" href="#id9" title="永久链接至标题"></a></h3>
 <blockquote>
 <div><blockquote>
 <div><ul class="simple">
@@ -425,8 +427,8 @@
 </div></blockquote>
 </div>
 </div>
-<div class="section" id="id11">
-<h2>调试软件<a class="headerlink" href="#id11" title="永久链接至标题"></a></h2>
+<div class="section" id="id10">
+<h2>调试软件<a class="headerlink" href="#id10" title="永久链接至标题"></a></h2>
 <p>选择 <code class="docutils literal notranslate"><span class="pre">Freedom</span> <span class="pre">Studio</span> <span class="pre">+</span> <span class="pre">OpenOCD</span></code> 方式进行debug。具体调试方法参考 <a class="reference external" href="./Developer_Environment_BL702/freedom_studio/freedom_studio.html">Freedom Studio</a> 。</p>
 </div>
 </div>
@@ -472,7 +474,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'release_bl_iot_sdk_1.6.39-238-gf5ba0a7ee',
+            VERSION:'release_bl_iot_sdk_1.6.40-726-g0f9d027d5',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,
