@@ -35,12 +35,12 @@ BL702 SDK Starter Guide
 
 -  进入需要编译的工程目录，命令：\ ``cd customer_app/bl702_demo_event``
 
-   .. figure:: imgs/image7.png
+   .. figure:: imgs/image16.png
       :alt:
 
--  可阅读 ``readme`` ，选择不同的命令进行编译，例如：编译BLE 命令：\ ``./genble``；编译zigbee 命令：\ ``./genzb`` ；编译zigbee + ble 命令：\ ``./genflashmap`` 
+-  可阅读 ``README.md`` ，选择不同的命令进行编译，例如：编译BLE 命令：\ ``./genblem1s1``；编译zigbee 命令：\ ``./genzb`` ；编译zigbee + ble 命令：\ ``./genzbble`` 
 
-   .. figure:: imgs/image8.png
+   .. figure:: imgs/image17.png
       :alt:
 
 bin文件下载
@@ -51,7 +51,7 @@ bin文件下载
 bin文件运行
 -----------
 
--  通过USB端口连接电脑，打开相应的串口号设置波特率为2000000，按下图标2中的Reset键复位设备；如果是用BL_PROJ板通过JTAG连接设备，设备启动时串口会提示打印信息；如果是USB直接连接设备，USB打印功能是在程序初始化完成后才开启，所以无法打印设备启动信息。等USB在PC上枚举成功后，再打开对应的串口号查看后续打印以及进行命令输入。 
+-  通过USB端口连接电脑，打开相应的串口号设置波特率为2000000，按下图标2中的Reset键复位设备；如果是用BL_PROG板通过JTAG连接设备，设备启动时串口会提示打印信息；如果是USB直接连接设备，USB打印功能是在程序初始化完成后才开启，所以无法打印设备启动信息。等USB在PC上枚举成功后，再打开对应的串口号查看后续打印以及进行命令输入。 
 
    .. figure:: imgs/image14.png
 	  :alt:

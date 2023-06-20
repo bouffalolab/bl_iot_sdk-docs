@@ -11,13 +11,13 @@ BLE
 使用步骤
 -----------
 
-- 进入 ``customer_app/bl602_demo_event`` 或 ``customer_app/bl702_demo_event`` 工程中，BL602用脚本 ``genromap`` 编译，BL702用脚本 ``genblestd`` 编译，完成后下载Bin文件；
-- BL602使用 ``stack_ble`` 命令初始化ble，打印的部分log如下，BL702不需要输入该命令。
+- 对于BL602，进入 ``customer_app/bl602_demo_event`` 工程中，用脚本 ``genromap`` 编译，完成后下载Bin文件；使用 ``stack_ble`` 命令使能ble。
+- 对于BL702，进入 ``customer_app/bl702_demo_event`` 工程中，用脚本 ``genblem1s1`` 编译，完成后下载Bin文件；demo中已使能ble。
+- 对于BL702L，进入 ``customer_app/bl702l_demo_ble_peripheral`` 工程中，用脚本 ``genblem1s1p`` 编译，完成后下载Bin文件；demo中已使能ble，开始adv，并进入低功耗模式；可以通过输入长度超过10bytes的任意cli命令将BL702L唤醒，该cli命令只唤醒BL702L，并不会执行，唤醒后BL702L不再主动进入低功耗模式。此时如果不需要发adv，可以通过输入cli命令ble_stop_adv关闭adv。通过输入cli命令pds_start让BL702L进入低功耗模式。
 
-    .. figure:: imgs/image1.png
-       :alt: 
+以下命令BL602, BL702, BL702L共用。
 
-- 依次使用 ``ble_init`` 、 ``ble_auth`` 进行相关的初始化；
+- 使用 ``ble_init`` 、 ``ble_auth`` 注册相关callback。
 
     .. figure:: imgs/image2.png
        :alt: 
@@ -25,7 +25,7 @@ BLE
     .. figure:: imgs/image3.png
        :alt: 
 
-- 使用 ``ble_start_adv 0 0 0x80 0x80`` 命令开启ble。
+- 使用 ``ble_start_adv 0 0 0x80 0x80`` 命令开启ble广播。
 
 
     .. figure:: imgs/image4.png
@@ -78,15 +78,14 @@ BLE
 	   
 OTA使用流程
 --------------- 
-
  - **第一步：安装APP**
 
 	- 下载 `Bouffalo Lab BLE general apk <https://dev.bouffalolab.com/download>`_ (目前仅支持安卓系统)并安装；
 	
  - **第二步：下载使能OAD服务的固件**
  
-	- 以工程bl702_demo_event为例，编译脚本为 ``genblestd`` ，使能OAD服务 ``CONFIG_BT_OAD_SERVER=1`` ，使能后的编译参数为 ``make CONFIG_BT=1 CONFIG_BLECONTROLLER_LIB=std 
-	  CONFIG_BT_OAD_SERVER=1 -j`` ；通过该参数编译生成带有OAD服务的Bin文件；并将该文件下载至BL702板子上；
+	- 以工程bl702_demo_event为例，需要通过以下几点来打开BLE OTA功能：1)在编译脚本中添加 ``CONFIG_BT_OAD_SERVER=1`` ，例如使用编译脚本 ``genblem1s1``，那么添加之后该脚本内容为 ``make CONFIG_BT=1 CONFIG_BLECONTROLLER_LIB=m1s1 
+	  CONFIG_BT_OAD_SERVER=1 -j`` ；2)应用层在ble使能后调用API ``oad_service_enable`` 注册OTA服务。最终执行编译脚本生成带有OAD服务的bin文件并下载至BL702板子上；
 	  
 	- 通过串口，输入以下命令发ADV；
 	
@@ -96,7 +95,7 @@ OTA使用流程
    
  - **第三步：生成OTA文件**
 
-	- 同样以工程bl702_demo_event为例，在cli.c文件中的version_cmd函数添加打印信息，用来测试OTA升级成功；编译参数同样为 ``make CONFIG_BT=1 CONFIG_BLECONTROLLER_LIB=std 
+	- 同样以工程bl702_demo_event为例，在cli.c文件中的version_cmd函数添加打印信息，用来测试OTA升级成功；编译参数同样为 ``make CONFIG_BT=1 CONFIG_BLECONTROLLER_LIB=m1s1 
 	  CONFIG_BT_OAD_SERVER=1 -j`` ，编译生成Bin文件；
 
 		.. figure:: imgs/image41.png
