@@ -5,49 +5,61 @@ BLE
 
 概述
 ------
+
 - BLE支持的特性：
+
     + 蓝牙HOST特性
+
         + GAP支持的角色：Peripheral与Central，Observer与Broadcaster
         - GATT支持的角色：Server与Client
         - 支持配对包括蓝牙4.2中的安全连接特性
         - 支持永久存储蓝牙特定的设置和数据
+
     + 蓝牙mesh特性
+
         + 支持Relay, Friend Node, Low-Power Node (LPN) and GATT Proxy角色
         - 支持两种Provisioning bearers(PB-ADV & PB-GATT)
+
 - BLE协议栈的架构：
+
                         .. figure:: imgs/image1.png
 
     + 总共有3个主要层，共同构成了一个完整的蓝牙低能耗协议栈 
-        + Host：这一层位于应用程序之下,由多个(非实时)网络和传输协议组成，使应用程序能够以标准和互操作的方式与对等设备通信。
+
+        + Host：这一层位于应用程序之下,由多个(非实时)网络和传输协议组成，使应用程序能够以标准和互操作的方式与对端设备通信。
         - Controller：控制器实现了链路层(LE LL)，这是一种低层次的实时协议，它与无线电硬件一起提供了空中通信的标准互操作。LL处理包的接收和传输，保证数据的传递，并处理所有LL控制程序。
         * Radio Hardware：实现所需的模拟和数字基带功能块，允许链路层固件在频谱的2.4GHz波段发送和接收。
 
 - 主控Host：
+
                         .. figure:: imgs/image2.png
 
     * 蓝牙Host层实现了所有高级协议和配置文件，最重要的是它为应用程序提供了高级API 
+
         - HCI:Host与controller接口
         - L2CAP:逻辑链路控制和适应协议
         - GATT:通用属性配置层（Generic Attribute Profile）
         - GAP:通用访问配置层（Generic Access Profile）
-        - SMP:安全管理器配置层（Security Manager Specification）
+        - SMP:安全管理器配置层（Security Manager Protocol）
 
 - 应用Application
+
     * 应用层是用户开发实际蓝牙应用的地方，包含必要的协议栈参数设置，以及各种功能函数的调用。我们分别从蓝牙从机和蓝牙主机两种设备来分析。
+
         * 蓝牙从机 
+
             - 相关硬件和基础服务初始化
             - 设置广播参数：广播数据，广播间隔，扫描回应等参数或者数据
             - 设置Profile：添加从机服务、特征值，还有设置回调函数用于接收主机数据等
-            - 设置配对参数（可选）
-            - 启动广播，开始运行
+            - 启动广播
             - 等待相关事件，及事件处理，例如收到主机发来的数据，被链接等等
+
         * 蓝牙主机 
+
             - 相关硬件和基础服务初始化
-            - 设置扫描参数
-            - 设置连接参数
-            - 设置配对参数（可选）
-            - 启动协议栈，开始运行
-            - 等待相关事件，及事件处理，例如扫描事件，从机的Notify事件等等。
+            - 设置扫描参数并开启扫描
+            - 当扫描到目标设备后，对该设备发起蓝牙连接
+            - 等待相关事件，及事件处理，例如蓝牙连接成功事件，从机的Notify事件等等。
 
 API参考
 ----------
@@ -84,8 +96,8 @@ API参考
     * @return       0:成功，!=0:失败
     */
 
-``int bt_le_adv_start(const struct bt_le_adv_param *param,const struct bt_data *ad, size_t ad_len,``
-                            ``const struct bt_data *sd, size_t sd_len)``
+``int bt_le_adv_start(const struct bt_le_adv_param *param,const struct bt_data *ad, size_t ad_len,const struct bt_data *sd, size_t sd_len)``
+
 
 ::
 
@@ -239,7 +251,7 @@ API参考
 ::
 
     /**
-    * function      断开当前连接
+    * function      断开当前连接或者取消正在进行的连接
     * @param[in]    conn：  指向当前连接的指针
     * @param[in]    reason：断开当前连接的原因
     * @return       0:成功，!=0:失败
@@ -272,7 +284,7 @@ API参考
 ::
 
     /**
-    * function      停止自动创建连接白名单列表中的设备
+    * function      停止自动创建ble连接
     * @param[in]    空
     * @return       0:成功，!=0:失败
     */
@@ -282,9 +294,9 @@ API参考
 ::
 
     /**
-    * function      自动创建连接远端设备
+    * function      使能或者禁止自动ble自动重连功能。如果传入的参数param不为空，每当与远端设备连接断开后，如果收到了该远端设备的ble可连接广播包，将重连该设备。
     * @param[in]    addr：  远端设备地址指针
-    * @param[in]    param： 指向连接参数指针
+    * @param[in]    param： 如果param不为空，则使能ble自动重连功能，如果param为空，禁用ble自动重连功能。
     * @return       0:成功，!=0:失败
     */
 
@@ -357,7 +369,7 @@ API参考
 ::
 
     /**
-    * function      注册认证回调函数
+    * function      注册authenticated配对过程中的callback函数。传入NULL注销之前注册的callback函数。
     * @param[in]    cb： 回调函数指针
     * @return       0:成功，!=0:失败
     */
@@ -415,12 +427,22 @@ API参考
     * @return       0:成功，!=0:失败
     */
 
-``int bt_get_local_address(bt_addr_le_t *adv_addr)``
+``int bt_get_local_public_address(bt_addr_le_t *adv_addr)``
 
 ::
 
     /**
-    * function      读取本机的地址
+    * function      读取本机的public地址
+    * @param[in]    adv_addr：  指向地址的指针
+    * @return       0:成功，!=0:失败
+    */
+
+``int bt_get_local_ramdon_address(bt_addr_le_t *adv_addr)``
+
+::
+
+    /**
+    * function      读取本机的ramdon地址
     * @param[in]    adv_addr：  指向地址的指针
     * @return       0:成功，!=0:失败
     */
@@ -461,7 +483,7 @@ API参考
         #endif
     };
 
-此数据结构用来配置广播参数，包括本地识别id、广播选项位域、广播间隙等，其中广播选项位域有如下枚举类型参数可选:
+此数据结构用来配置广播参数，包括本地识别id、广播选项位域、广播间隔等，其中广播选项位域有如下枚举类型参数可选:
 
 .. code:: c
 
@@ -518,6 +540,7 @@ API参考
         /** Use whitelist to filter devices that can connect. */
         BT_LE_ADV_OPT_FILTER_CONN = BIT(7),
     };
+
 如果需要发送一个广播包，配置可以如下：
 
 .. code:: c
@@ -630,7 +653,7 @@ timeout：连接超时时间。
 
 .. code:: c
 
-    interval_min=BT_GAP_INIT_CONN_INT_MIN（0x0018）
+    interval_min=BT_GAP_INIT_CONN_INT_MIN(0x0018)
     interval_max=BT_GAP_INIT_CONN_INT_MAX(0x0028)
     latency=0
     timeout=400
@@ -702,6 +725,7 @@ timeout：连接超时时间。
         } rv;
     #endif
     };
+
 此数据结构为当前连接数据结构，其中包括BLE蓝牙连接相关的参数，连接成功后该数据结构可以被用户调用。
 
 

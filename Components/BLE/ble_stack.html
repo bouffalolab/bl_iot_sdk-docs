@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>BLE &mdash; BL IoT SDK release_bl_iot_sdk_1.6.40-1278-gd5108915c 文档</title>
+  <title>BLE &mdash; BL IoT SDK release_bl_iot_sdk_1.6.40-1605-g2706c9d81 文档</title>
   
 
   
@@ -39,7 +39,7 @@
         <link rel="index" title="索引"
               href="../../genindex.html"/>
         <link rel="search" title="搜索" href="../../search.html"/>
-    <link rel="top" title="BL IoT SDK release_bl_iot_sdk_1.6.40-1278-gd5108915c 文档" href="../../index.html"/>
+    <link rel="top" title="BL IoT SDK release_bl_iot_sdk_1.6.40-1605-g2706c9d81 文档" href="../../index.html"/>
         <link rel="up" title="&lt;no title&gt;" href="index.html"/>
         <link rel="next" title="QA" href="../../QA/index.html"/>
         <link rel="prev" title="&lt;no title&gt;" href="index.html"/> 
@@ -74,7 +74,7 @@
             
             
               <div class="version">
-                release_bl_iot_sdk_1.6.40-1278-gd5108915c
+                release_bl_iot_sdk_1.6.40-1605-g2706c9d81
               </div>
             
           
@@ -109,9 +109,9 @@
 <li class="toctree-l2"><a class="reference internal" href="../Middleware/devicetree.html">dts</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../Middleware/blog.html">blog</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">ble_stack</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#id1">概述</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#section-1">概述</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#api">API参考</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id2">数据结构参考</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#section-2">数据结构参考</a></li>
 </ul>
 </li>
 </ul>
@@ -190,129 +190,115 @@
             
   <div class="section" id="ble">
 <span id="ble-index"></span><h1>BLE<a class="headerlink" href="#ble" title="永久链接至标题"></a></h1>
-<div class="section" id="id1">
-<h2>概述<a class="headerlink" href="#id1" title="永久链接至标题"></a></h2>
+<div class="section" id="section-1">
+<h2>概述<a class="headerlink" href="#section-1" title="永久链接至标题"></a></h2>
 <ul>
-<li><dl class="first docutils">
-<dt>BLE支持的特性：</dt>
-<dd><ul class="first last">
-<li><dl class="first docutils">
-<dt>蓝牙HOST特性</dt>
-<dd><ul class="first simple">
+<li><p class="first">BLE支持的特性：</p>
+<blockquote>
+<div><ul>
+<li><p class="first">蓝牙HOST特性</p>
+<blockquote>
+<div><ul class="simple">
 <li>GAP支持的角色：Peripheral与Central，Observer与Broadcaster</li>
 </ul>
-<ul class="last simple">
+<ul class="simple">
 <li>GATT支持的角色：Server与Client</li>
 <li>支持配对包括蓝牙4.2中的安全连接特性</li>
 <li>支持永久存储蓝牙特定的设置和数据</li>
 </ul>
-</dd>
-</dl>
+</div></blockquote>
 </li>
-<li><dl class="first docutils">
-<dt>蓝牙mesh特性</dt>
-<dd><ul class="first simple">
+<li><p class="first">蓝牙mesh特性</p>
+<blockquote>
+<div><ul class="simple">
 <li>支持Relay, Friend Node, Low-Power Node (LPN) and GATT Proxy角色</li>
 </ul>
-<ul class="last simple">
+<ul class="simple">
 <li>支持两种Provisioning bearers(PB-ADV &amp; PB-GATT)</li>
 </ul>
-</dd>
-</dl>
+</div></blockquote>
 </li>
 </ul>
-</dd>
-</dl>
+</div></blockquote>
 </li>
-<li><dl class="first docutils">
-<dt>BLE协议栈的架构：</dt>
-<dd><blockquote class="first">
+<li><p class="first">BLE协议栈的架构：</p>
+<blockquote>
+<div><blockquote>
 <div><div class="figure">
 <img alt="../../_images/image1.png" src="../../_images/image1.png" />
 </div>
 </div></blockquote>
-<ul class="last">
-<li><dl class="first docutils">
-<dt>总共有3个主要层，共同构成了一个完整的蓝牙低能耗协议栈</dt>
-<dd><ul class="first simple">
-<li>Host：这一层位于应用程序之下,由多个(非实时)网络和传输协议组成，使应用程序能够以标准和互操作的方式与对等设备通信。</li>
+<ul>
+<li><p class="first">总共有3个主要层，共同构成了一个完整的蓝牙低能耗协议栈</p>
+<blockquote>
+<div><ul class="simple">
+<li>Host：这一层位于应用程序之下,由多个(非实时)网络和传输协议组成，使应用程序能够以标准和互操作的方式与对端设备通信。</li>
 </ul>
 <ul class="simple">
 <li>Controller：控制器实现了链路层(LE LL)，这是一种低层次的实时协议，它与无线电硬件一起提供了空中通信的标准互操作。LL处理包的接收和传输，保证数据的传递，并处理所有LL控制程序。</li>
 </ul>
-<ul class="last simple">
+<ul class="simple">
 <li>Radio Hardware：实现所需的模拟和数字基带功能块，允许链路层固件在频谱的2.4GHz波段发送和接收。</li>
 </ul>
-</dd>
-</dl>
+</div></blockquote>
 </li>
 </ul>
-</dd>
-</dl>
+</div></blockquote>
 </li>
-<li><dl class="first docutils">
-<dt>主控Host：</dt>
-<dd><blockquote class="first">
+<li><p class="first">主控Host：</p>
+<blockquote>
+<div><blockquote>
 <div><div class="figure">
 <img alt="../../_images/image2.png" src="../../_images/image2.png" />
 </div>
 </div></blockquote>
-<ul class="last simple">
-<li><dl class="first docutils">
-<dt>蓝牙Host层实现了所有高级协议和配置文件，最重要的是它为应用程序提供了高级API</dt>
-<dd><ul class="first last">
+<ul>
+<li><p class="first">蓝牙Host层实现了所有高级协议和配置文件，最重要的是它为应用程序提供了高级API</p>
+<blockquote>
+<div><ul class="simple">
 <li>HCI:Host与controller接口</li>
 <li>L2CAP:逻辑链路控制和适应协议</li>
 <li>GATT:通用属性配置层（Generic Attribute Profile）</li>
 <li>GAP:通用访问配置层（Generic Access Profile）</li>
-<li>SMP:安全管理器配置层（Security Manager Specification）</li>
+<li>SMP:安全管理器配置层（Security Manager Protocol）</li>
 </ul>
-</dd>
-</dl>
+</div></blockquote>
 </li>
 </ul>
-</dd>
-</dl>
+</div></blockquote>
 </li>
-<li><dl class="first docutils">
-<dt>应用Application</dt>
-<dd><ul class="first last simple">
-<li><dl class="first docutils">
-<dt>应用层是用户开发实际蓝牙应用的地方，包含必要的协议栈参数设置，以及各种功能函数的调用。我们分别从蓝牙从机和蓝牙主机两种设备来分析。</dt>
-<dd><ul class="first last">
-<li><dl class="first docutils">
-<dt>蓝牙从机</dt>
-<dd><ul class="first last">
+<li><p class="first">应用Application</p>
+<blockquote>
+<div><ul>
+<li><p class="first">应用层是用户开发实际蓝牙应用的地方，包含必要的协议栈参数设置，以及各种功能函数的调用。我们分别从蓝牙从机和蓝牙主机两种设备来分析。</p>
+<blockquote>
+<div><ul>
+<li><p class="first">蓝牙从机</p>
+<blockquote>
+<div><ul class="simple">
 <li>相关硬件和基础服务初始化</li>
 <li>设置广播参数：广播数据，广播间隔，扫描回应等参数或者数据</li>
 <li>设置Profile：添加从机服务、特征值，还有设置回调函数用于接收主机数据等</li>
-<li>设置配对参数（可选）</li>
-<li>启动广播，开始运行</li>
+<li>启动广播</li>
 <li>等待相关事件，及事件处理，例如收到主机发来的数据，被链接等等</li>
 </ul>
-</dd>
-</dl>
+</div></blockquote>
 </li>
-<li><dl class="first docutils">
-<dt>蓝牙主机</dt>
-<dd><ul class="first last">
+<li><p class="first">蓝牙主机</p>
+<blockquote>
+<div><ul class="simple">
 <li>相关硬件和基础服务初始化</li>
-<li>设置扫描参数</li>
-<li>设置连接参数</li>
-<li>设置配对参数（可选）</li>
-<li>启动协议栈，开始运行</li>
-<li>等待相关事件，及事件处理，例如扫描事件，从机的Notify事件等等。</li>
+<li>设置扫描参数并开启扫描</li>
+<li>当扫描到目标设备后，对该设备发起蓝牙连接</li>
+<li>等待相关事件，及事件处理，例如蓝牙连接成功事件，从机的Notify事件等等。</li>
 </ul>
-</dd>
-</dl>
+</div></blockquote>
 </li>
 </ul>
-</dd>
-</dl>
+</div></blockquote>
 </li>
 </ul>
-</dd>
-</dl>
+</div></blockquote>
 </li>
 </ul>
 </div>
@@ -345,10 +331,7 @@
 */
 </pre></div>
 </div>
-<dl class="docutils">
-<dt><code class="docutils literal notranslate"><span class="pre">int</span> <span class="pre">bt_le_adv_start(const</span> <span class="pre">struct</span> <span class="pre">bt_le_adv_param</span> <span class="pre">*param,const</span> <span class="pre">struct</span> <span class="pre">bt_data</span> <span class="pre">*ad,</span> <span class="pre">size_t</span> <span class="pre">ad_len,</span></code></dt>
-<dd><code class="docutils literal notranslate"><span class="pre">const</span> <span class="pre">struct</span> <span class="pre">bt_data</span> <span class="pre">*sd,</span> <span class="pre">size_t</span> <span class="pre">sd_len)</span></code></dd>
-</dl>
+<p><code class="docutils literal notranslate"><span class="pre">int</span> <span class="pre">bt_le_adv_start(const</span> <span class="pre">struct</span> <span class="pre">bt_le_adv_param</span> <span class="pre">*param,const</span> <span class="pre">struct</span> <span class="pre">bt_data</span> <span class="pre">*ad,</span> <span class="pre">size_t</span> <span class="pre">ad_len,const</span> <span class="pre">struct</span> <span class="pre">bt_data</span> <span class="pre">*sd,</span> <span class="pre">size_t</span> <span class="pre">sd_len)</span></code></p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>/**
 * function      开启BLE广播
 *
@@ -466,7 +449,7 @@
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">int</span> <span class="pre">bt_conn_disconnect(struct</span> <span class="pre">bt_conn</span> <span class="pre">*conn,</span> <span class="pre">u8_t</span> <span class="pre">reason)</span></code></p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>/**
-* function      断开当前连接
+* function      断开当前连接或者取消正在进行的连接
 * @param[in]    conn：  指向当前连接的指针
 * @param[in]    reason：断开当前连接的原因
 * @return       0:成功，!=0:失败
@@ -492,7 +475,7 @@
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">int</span> <span class="pre">bt_conn_create_auto_stop(void)</span></code></p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>/**
-* function      停止自动创建连接白名单列表中的设备
+* function      停止自动创建ble连接
 * @param[in]    空
 * @return       0:成功，!=0:失败
 */
@@ -500,9 +483,9 @@
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">int</span> <span class="pre">bt_le_set_auto_conn(const</span> <span class="pre">bt_addr_le_t</span> <span class="pre">*addr,const</span> <span class="pre">struct</span> <span class="pre">bt_le_conn_param</span> <span class="pre">*param)</span></code></p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>/**
-* function      自动创建连接远端设备
+* function      使能或者禁止自动ble自动重连功能。如果传入的参数param不为空，每当与远端设备连接断开后，如果收到了该远端设备的ble可连接广播包，将重连该设备。
 * @param[in]    addr：  远端设备地址指针
-* @param[in]    param： 指向连接参数指针
+* @param[in]    param： 如果param不为空，则使能ble自动重连功能，如果param为空，禁用ble自动重连功能。
 * @return       0:成功，!=0:失败
 */
 </pre></div>
@@ -559,7 +542,7 @@
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">int</span> <span class="pre">bt_conn_auth_cb_register(const</span> <span class="pre">struct</span> <span class="pre">bt_conn_auth_cb</span> <span class="pre">*cb)</span></code></p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>/**
-* function      注册认证回调函数
+* function      注册authenticated配对过程中的callback函数。传入NULL注销之前注册的callback函数。
 * @param[in]    cb： 回调函数指针
 * @return       0:成功，!=0:失败
 */
@@ -608,9 +591,17 @@
 */
 </pre></div>
 </div>
-<p><code class="docutils literal notranslate"><span class="pre">int</span> <span class="pre">bt_get_local_address(bt_addr_le_t</span> <span class="pre">*adv_addr)</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">int</span> <span class="pre">bt_get_local_public_address(bt_addr_le_t</span> <span class="pre">*adv_addr)</span></code></p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>/**
-* function      读取本机的地址
+* function      读取本机的public地址
+* @param[in]    adv_addr：  指向地址的指针
+* @return       0:成功，!=0:失败
+*/
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">int</span> <span class="pre">bt_get_local_ramdon_address(bt_addr_le_t</span> <span class="pre">*adv_addr)</span></code></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>/**
+* function      读取本机的ramdon地址
 * @param[in]    adv_addr：  指向地址的指针
 * @return       0:成功，!=0:失败
 */
@@ -625,8 +616,8 @@
 </pre></div>
 </div>
 </div>
-<div class="section" id="id2">
-<h2>数据结构参考<a class="headerlink" href="#id2" title="永久链接至标题"></a></h2>
+<div class="section" id="section-2">
+<h2>数据结构参考<a class="headerlink" href="#section-2" title="永久链接至标题"></a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">bt_le_adv_param</span></code>数据结构：</p>
 <div class="code c highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">/**</span> <span class="n">LE</span> <span class="n">Advertising</span> <span class="n">Parameters</span><span class="o">.</span> <span class="o">*/</span>
 <span class="n">struct</span> <span class="n">bt_le_adv_param</span> <span class="p">{</span>
@@ -648,7 +639,7 @@
 <span class="p">};</span>
 </pre></div>
 </div>
-<p>此数据结构用来配置广播参数，包括本地识别id、广播选项位域、广播间隙等，其中广播选项位域有如下枚举类型参数可选:</p>
+<p>此数据结构用来配置广播参数，包括本地识别id、广播选项位域、广播间隔等，其中广播选项位域有如下枚举类型参数可选:</p>
 <div class="code c highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">enum</span> <span class="p">{</span>
     <span class="o">/**</span> <span class="n">Convenience</span> <span class="n">value</span> <span class="n">when</span> <span class="n">no</span> <span class="n">options</span> <span class="n">are</span> <span class="n">specified</span><span class="o">.</span> <span class="o">*/</span>
     <span class="n">BT_LE_ADV_OPT_NONE</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
@@ -796,10 +787,10 @@ window：扫描窗口。</p>
 latency：指定为连接事件数的连接允许的最大从延迟。
 timeout：连接超时时间。</p>
 <p>配置该数据结构，如下：</p>
-<div class="code c highlight-default notranslate"><div class="highlight"><pre><span></span>interval_min=BT_GAP_INIT_CONN_INT_MIN（0x0018）
-interval_max=BT_GAP_INIT_CONN_INT_MAX(0x0028)
-latency=0
-timeout=400
+<div class="code c highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">interval_min</span><span class="o">=</span><span class="n">BT_GAP_INIT_CONN_INT_MIN</span><span class="p">(</span><span class="mh">0x0018</span><span class="p">)</span>
+<span class="n">interval_max</span><span class="o">=</span><span class="n">BT_GAP_INIT_CONN_INT_MAX</span><span class="p">(</span><span class="mh">0x0028</span><span class="p">)</span>
+<span class="n">latency</span><span class="o">=</span><span class="mi">0</span>
+<span class="n">timeout</span><span class="o">=</span><span class="mi">400</span>
 </pre></div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">bt_conn</span></code>数据结构：</p>
@@ -913,7 +904,7 @@ timeout=400
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'release_bl_iot_sdk_1.6.40-1278-gd5108915c',
+            VERSION:'release_bl_iot_sdk_1.6.40-1605-g2706c9d81',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,

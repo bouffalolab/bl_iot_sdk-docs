@@ -4,7 +4,7 @@ Freedom Studio
 本文档介绍Freedom Studio的使用。下载地址\ ``https://github.com/sifive/freedom-studio/releases``\ ，版本为 ``FreedomStudio-2019-08-2`` ；Freedom Studio使用需要先安装JDK环境。
 
 安装JDK环境
---------
+-------------------
 
 -  JDK下载地址\ ``https://www.oracle.com/java/technologies/javase/javase-jdk8-downloads.html``\,JDK安装，如图所示；
 
@@ -21,7 +21,7 @@ Freedom Studio
    :alt: 
 
 导入工程
---------
+-------------------
 
 -  首先启动 ``Freedom Studio`` ，打开工具栏上的\ ``File > import``\ ，选择\ ``General``\ 菜单下的\ ``Existing Projects into Workspace``\ 选项导入工程。
 
@@ -33,7 +33,7 @@ Freedom Studio
    
    
 配置工程launch文件
------ 
+-------------------
 	
 	-  在工程中选择Debug Configurations，如果导入工程中有如下bl_iot_sdk_debug_freedom_studio_win_bl702等配置，那么该章节可以略过；
 	
@@ -60,7 +60,7 @@ Freedom Studio
 	.. figure:: imgs/image19.png
 	   :alt:
 	   
-	- Debugger选项中设置如下，其中if_bflb_link.cfg、tgt_702_xip.cfg、702.init文件，默认在工程的debug目录下；
+	- Debugger选项中设置如下，其中if_rv_dbg_plus.cfg、tgt_702_xip.cfg、702.init文件，默认在工程的debug目录下；
 	
 	.. figure:: imgs/image20.png
 	   :alt:
@@ -94,7 +94,7 @@ Freedom Studio
 	   :alt:
 		   
 Debug
-----
+-------------------
 
 -  需要将Sipeed RV-Debugger Plus调试板子通过JTAG 连接上设备，调试板与设备通过USB连上电脑, 如图所示：
 

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Mesh &mdash; BL IoT SDK release_bl_iot_sdk_1.6.40-1278-gd5108915c 文档</title>
+  <title>Mesh &mdash; BL IoT SDK release_bl_iot_sdk_1.6.40-1605-g2706c9d81 文档</title>
   
 
   
@@ -39,10 +39,10 @@
         <link rel="index" title="索引"
               href="../../../genindex.html"/>
         <link rel="search" title="搜索" href="../../../search.html"/>
-    <link rel="top" title="BL IoT SDK release_bl_iot_sdk_1.6.40-1278-gd5108915c 文档" href="../../../index.html"/>
+    <link rel="top" title="BL IoT SDK release_bl_iot_sdk_1.6.40-1605-g2706c9d81 文档" href="../../../index.html"/>
         <link rel="up" title="Bluetooth" href="../index.html"/>
         <link rel="next" title="(BL702)" href="../../network/index.html"/>
-        <link rel="prev" title="BLE" href="../demo_ble/ble.html"/> 
+        <link rel="prev" title="Ble Introduction" href="../demo_ble/ble.html"/> 
 
   
   <script src="../../../_static/js/modernizr.min.js"></script>
@@ -74,7 +74,7 @@
             
             
               <div class="version">
-                release_bl_iot_sdk_1.6.40-1278-gd5108915c
+                release_bl_iot_sdk_1.6.40-1605-g2706c9d81
               </div>
             
           
@@ -103,7 +103,7 @@
 <li class="toctree-l2 current"><a class="reference internal" href="../index.html">Bluetooth</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="../demo_ble/ble.html">BLE</a></li>
 <li class="toctree-l3 current"><a class="current reference internal" href="#">Mesh</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#id1">总览</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#section-1">总览</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#node">Node 使用步骤</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#provisioner">Provisioner 使用步骤</a></li>
 </ul>
@@ -193,8 +193,8 @@
             
   <div class="section" id="mesh">
 <span id="ble-index"></span><h1>Mesh<a class="headerlink" href="#mesh" title="永久链接至标题"></a></h1>
-<div class="section" id="id1">
-<h2>总览<a class="headerlink" href="#id1" title="永久链接至标题"></a></h2>
+<div class="section" id="section-1">
+<h2>总览<a class="headerlink" href="#section-1" title="永久链接至标题"></a></h2>
 <p>本示例主要介绍如何使用ble mesh。</p>
 </div>
 <div class="section" id="node">
@@ -207,20 +207,18 @@
 <li><p class="first">在串口中运行Mesh相关命令:</p>
 <blockquote>
 <div><ul>
-<li><dl class="first docutils">
-<dt>BL602：</dt>
-<dd><p class="first">#stack_ble</p>
+<li><p class="first">BL602：</p>
+<blockquote>
+<div><p>#stack_ble</p>
 <p>#blemesh_init</p>
-<p class="last">#blemesh_pb 2 1</p>
-</dd>
-</dl>
+<p>#blemesh_pb 2 1</p>
+</div></blockquote>
 </li>
-<li><dl class="first docutils">
-<dt>BL702：</dt>
-<dd><p class="first">#blemesh_init</p>
-<p class="last">#blemesh_pb 2 1</p>
-</dd>
-</dl>
+<li><p class="first">BL702：</p>
+<blockquote>
+<div><p>#blemesh_init</p>
+<p>#blemesh_pb 2 1</p>
+</div></blockquote>
 </li>
 </ul>
 </div></blockquote>
@@ -344,43 +342,47 @@
 <ul>
 <li><p class="first">启动未入网节点, 进入等待入网状态。</p>
 <blockquote>
-<div><dl class="docutils">
-<dt>1、初始化 BLE。</dt>
-<dd><p class="first last">stack_ble</p>
-</dd>
-<dt>2、初始化 MESH。</dt>
-<dd><p class="first last">blemesh_init</p>
-</dd>
-<dt>3、发送 PB-ADV Unproved beacon。</dt>
-<dd><p class="first last">blemesh_pb 1 1</p>
-</dd>
-</dl>
+<div><p>1、初始化 BLE</p>
+<blockquote>
+<div><p>stack_ble</p>
+</div></blockquote>
+<p>2、初始化 MESH</p>
+<blockquote>
+<div><p>blemesh_init</p>
+</div></blockquote>
+<p>3、发送 PB-ADV Unproved beacon</p>
+<blockquote>
+<div><p>blemesh_pb 1 1</p>
+</div></blockquote>
 </div></blockquote>
 </li>
 <li><p class="first">Provisioner 节点使用</p>
 <blockquote>
-<div><dl class="docutils">
-<dt>1、启动Provisioner,添加未入网节点。</dt>
-<dd><dl class="first last docutils">
-<dt>1.1、初始化 BLE。</dt>
-<dd><p class="first last">stack_ble</p>
-</dd>
-<dt>1.2、初始化 MESH。</dt>
-<dd><p class="first">blemesh_pvnr_init</p>
+<div><p>1、启动Provisioner,添加未入网节点。</p>
+<blockquote>
+<div><p>1.1、初始化 BLE</p>
+<blockquote>
+<div><p>stack_ble</p>
+</div></blockquote>
+<p>1.2、初始化 MESH</p>
+<blockquote>
+<div><p>blemesh_pvnr_init</p>
 <p>运行 log 如下:</p>
-<blockquote class="last">
+<blockquote>
 <div><p># blemesh_pvnr_init</p>
 <p>Local node provisioned, net_idx 0x0000 address 0x0001</p>
 <p>Network key:8fe7deea92943001567251dc1f9b0f03</p>
 <p>Dev key:89c2f18f9f286661c6bbb1430d7aadb7</p>
 <p>Provisioning completed</p>
 </div></blockquote>
-</dd>
-<dt>1.3、开启未入网广播数据回调，和添加节点成功数回调，会打印出未入网设备的UUID信息。</dt>
-<dd><p class="first last">blemesh_beacon_listen 0x01</p>
-</dd>
-<dt>1.4、加指定设备入网</dt>
-<dd><p class="first">blemesh_provision_adv 07af000011112222333318b905de96c2 0 3 0</p>
+</div></blockquote>
+<p>1.3、发现unprovisioned设备，并打印出未入网设备的UUID信息.</p>
+<blockquote>
+<div><p>blemesh_beacon_listen 0x01</p>
+</div></blockquote>
+<p>1.4、加指定设备入网</p>
+<blockquote>
+<div><p>blemesh_provision_adv 07af000011112222333318b905de96c2 0 3 0</p>
 <p>P1：“07af000011112222333318b905de96c2&quot; 为设备的UUID.</p>
 <p>P2：0：net_idx</p>
 <p>P3：3：指定入网设备的单播地址。</p>
@@ -393,57 +395,62 @@
 <p>addr:[3]</p>
 <p>num_elem:[1]</p>
 </div></blockquote>
-<p class="last">设备入网成功。</p>
-</dd>
-</dl>
-</dd>
-<dt>2、设置 node model server</dt>
-<dd><dl class="first last docutils">
-<dt>2.1、获取 composition data.</dt>
-<dd><p class="first">blemesh_get_comp 0x0000 0x0003 0x00</p>
+<p>设备入网成功。</p>
+</div></blockquote>
+</div></blockquote>
+<p>2、设置 node model server</p>
+<blockquote>
+<div><p>2.1、获取 composition data</p>
+<blockquote>
+<div><p>blemesh_get_comp 0x0000 0x0003 0x00</p>
 <p>P1：net index.</p>
 <p>P2：dst address.</p>
-<p class="last">P3：page number.</p>
-</dd>
-<dt>2.2、添加appkey</dt>
-<dd><p class="first">blemesh_app_key_add 0x0000 0x0003 0x0000 0x0000</p>
+<p>P3：page number.</p>
+</div></blockquote>
+<p>2.2、添加appkey</p>
+<blockquote>
+<div><p>blemesh_app_key_add 0x0000 0x0003 0x0000 0x0000</p>
 <p>P1：net index.</p>
 <p>P2：dst address.</p>
 <p>P3：Network key index。</p>
-<p class="last">P4：Application key index.</p>
-</dd>
-<dt>2.3、绑定Generic onoff server model</dt>
-<dd><p class="first">blemesh_mod_app_bind 0x0000 0x0003 0x0003 0x0000 0x1000</p>
+<p>P4：Application key index.</p>
+</div></blockquote>
+<p>2.3、绑定Generic onoff server model</p>
+<blockquote>
+<div><p>blemesh_mod_app_bind 0x0000 0x0003 0x0003 0x0000 0x1000</p>
 <p>P1：net index.</p>
 <p>P2：dst address.</p>
 <p>P3：element address.</p>
 <p>P4：Application key index.</p>
-<p class="last">P5：Model ID.</p>
-</dd>
-</dl>
-</dd>
-<dt>3、Provisioner 使用 client 控制 node 的 server</dt>
-<dd><dl class="first last docutils">
-<dt>3.1、注册回调函数</dt>
-<dd><p class="first last">blemesh_gen_oo_cli reg</p>
-</dd>
-<dt>3.2、获取Generic onoff server status</dt>
-<dd><p class="first last">blemesh_gen_oo_cli get 0x0000 0x8201 0x00 0x0003 0x0000</p>
-</dd>
-<dt>3.3、设置Generic onoff server</dt>
-<dd><p class="first">设置onoff状态为1</p>
+<p>P5：Model ID.</p>
+</div></blockquote>
+</div></blockquote>
+<p>3、Provisioner 使用 client 控制 node 的 server</p>
+<blockquote>
+<div><p>3.1、注册回调函数</p>
+<blockquote>
+<div><p>blemesh_gen_oo_cli reg</p>
+</div></blockquote>
+<p>3.2、获取Generic onoff server status</p>
+<blockquote>
+<div><p>blemesh_gen_oo_cli get 0x0000 0x8201 0x00 0x0003 0x0000</p>
+</div></blockquote>
+<p>3.3、设置Generic onoff server</p>
+<blockquote>
+<div><p>设置onoff状态为1</p>
 <p>blemesh_gen_oo_cli set 0x0000 0x8202 0x00 0x0003 0x0000 0x00 0x01 0x00 0x00 0x00</p>
 <p>设置onoff状态为0</p>
-<p class="last">blemesh_gen_oo_cli set 0x0000 0x8202 0x00 0x0003 0x0000 0x00 0x00 0x01 0x00 0x00</p>
-</dd>
-</dl>
-</dd>
-<dt>4、删除节点</dt>
-<dd><p class="first last">blemesh_node_reset 0x0000 0x0003</p>
-</dd>
-<dt>5、Group subscription 操作。</dt>
-<dd><p class="first">添加：
-blemesh_mod_sub_add 0x0000 0x0003 0x0003 0xc000 0x1000</p>
+<p>blemesh_gen_oo_cli set 0x0000 0x8202 0x00 0x0003 0x0000 0x00 0x00 0x01 0x00 0x00</p>
+</div></blockquote>
+</div></blockquote>
+<p>4、删除节点</p>
+<blockquote>
+<div><p>blemesh_node_reset 0x0000 0x0003</p>
+</div></blockquote>
+<p>5、Group subscription 操作</p>
+<blockquote>
+<div><p>添加：</p>
+<p>blemesh_mod_sub_add 0x0000 0x0003 0x0003 0xc000 0x1000</p>
 <blockquote>
 <div><p>P1：net index.</p>
 <p>P2：dst address.</p>
@@ -453,38 +460,38 @@ blemesh_mod_sub_add 0x0000 0x0003 0x0003 0xc000 0x1000</p>
 </div></blockquote>
 <p>删除：</p>
 <p>blemesh_mod_sub_del 0x0000 0x0003 0x0003 0xc000 0x1000</p>
-<blockquote class="last">
+<blockquote>
 <div><p>P1：net index.</p>
 <p>P2：dst address.</p>
 <p>P3：element address.</p>
 <p>P4：subscription address.</p>
 <p>P5：Model ID</p>
 </div></blockquote>
-</dd>
-<dt>6、Vendor model 操作。</dt>
-<dd><p class="first">需要设置 CONFIG_BT_MESH_MODEL_VENDOR_CLI=1， 来开启 vendor cli model 的功能</p>
-<dl class="last docutils">
-<dt>6.1、Node 绑定 Vendor server model</dt>
-<dd><p class="first">blemesh_mod_app_bind 0x0000 0x0003 0x0003 0x0000 0x0002 0x07AF</p>
+</div></blockquote>
+<p>6、Vendor model 操作</p>
+<blockquote>
+<div><p>需要设置 CONFIG_BT_MESH_MODEL_VENDOR_CLI=1， 来开启 vendor cli model 的功能</p>
+<p>6.1、Node 绑定 Vendor server model</p>
+<blockquote>
+<div><p>blemesh_mod_app_bind 0x0000 0x0003 0x0003 0x0000 0x0002 0x07AF</p>
 <p>P1：net index.</p>
 <p>P2：dst address.</p>
 <p>P3：element address.</p>
 <p>P4：Application key index.</p>
 <p>P5：Model ID. (0x0002) bouffalolab vendor model id.</p>
-<p class="last">P6:   Company ID.(0x07AF) bouffalolab company id.</p>
-</dd>
-<dt>6.2、Provisioner  向 Node 发送数据</dt>
-<dd><p class="first">blemesh_vendor_cli  0x0000 0x0008 0x00 0x0003 0x0000 001234</p>
+<p>P6:   Company ID.(0x07AF) bouffalolab company id.</p>
+</div></blockquote>
+<p>6.2、Provisioner  向 Node 发送数据</p>
+<blockquote>
+<div><p>blemesh_vendor_cli  0x0000 0x0008 0x00 0x0003 0x0000 001234</p>
 <p>P1：Application key index</p>
 <p>P2：opcode</p>
-<p>P3：msg_role&nbsp;（暂未使用）</p>
+<p>P3：msg_role&nbsp;(暂未使用)</p>
 <p>P4：addr</p>
 <p>P5：net index</p>
-<p class="last">P6：status</p>
-</dd>
-</dl>
-</dd>
-</dl>
+<p>P6：status</p>
+</div></blockquote>
+</div></blockquote>
 </div></blockquote>
 </li>
 </ul>
@@ -501,7 +508,7 @@ blemesh_mod_sub_add 0x0000 0x0003 0x0003 0xc000 0x1000</p>
         <a href="../../network/index.html" class="btn btn-neutral float-right" title="(BL702)" accesskey="n">下一页 <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="../demo_ble/ble.html" class="btn btn-neutral" title="BLE" accesskey="p"><span class="fa fa-arrow-circle-left"></span> 上一页</a>
+        <a href="../demo_ble/ble.html" class="btn btn-neutral" title="Ble Introduction" accesskey="p"><span class="fa fa-arrow-circle-left"></span> 上一页</a>
       
     </div>
   
@@ -532,7 +539,7 @@ blemesh_mod_sub_add 0x0000 0x0003 0x0003 0xc000 0x1000</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../',
-            VERSION:'release_bl_iot_sdk_1.6.40-1278-gd5108915c',
+            VERSION:'release_bl_iot_sdk_1.6.40-1605-g2706c9d81',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,

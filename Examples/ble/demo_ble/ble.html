@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>BLE &mdash; BL IoT SDK release_bl_iot_sdk_1.6.40-1278-gd5108915c 文档</title>
+  <title>Ble Introduction &mdash; BL IoT SDK release_bl_iot_sdk_1.6.40-1605-g2706c9d81 文档</title>
   
 
   
@@ -39,7 +39,7 @@
         <link rel="index" title="索引"
               href="../../../genindex.html"/>
         <link rel="search" title="搜索" href="../../../search.html"/>
-    <link rel="top" title="BL IoT SDK release_bl_iot_sdk_1.6.40-1278-gd5108915c 文档" href="../../../index.html"/>
+    <link rel="top" title="BL IoT SDK release_bl_iot_sdk_1.6.40-1605-g2706c9d81 文档" href="../../../index.html"/>
         <link rel="up" title="Bluetooth" href="../index.html"/>
         <link rel="next" title="Mesh" href="../demo_mesh/mesh.html"/>
         <link rel="prev" title="Bluetooth" href="../index.html"/> 
@@ -74,7 +74,7 @@
             
             
               <div class="version">
-                release_bl_iot_sdk_1.6.40-1278-gd5108915c
+                release_bl_iot_sdk_1.6.40-1605-g2706c9d81
               </div>
             
           
@@ -102,8 +102,8 @@
 <li class="toctree-l1 current"><a class="reference internal" href="../../index.html">Example</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="../index.html">Bluetooth</a><ul class="current">
 <li class="toctree-l3 current"><a class="current reference internal" href="#">BLE</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#id1">总览</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id2">使用步骤</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#section-1">总览</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#section-2">使用步骤</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#ota">OTA使用流程</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#cli">Cli命令介绍</a></li>
 </ul>
@@ -173,7 +173,7 @@
         
           <li><a href="../index.html">Bluetooth</a> &raquo;</li>
         
-      <li>BLE</li>
+      <li>Ble Introduction</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -192,18 +192,18 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="ble">
-<span id="ble-index"></span><h1>BLE<a class="headerlink" href="#ble" title="永久链接至标题"></a></h1>
-<div class="section" id="id1">
-<h2>总览<a class="headerlink" href="#id1" title="永久链接至标题"></a></h2>
+  <div class="section" id="ble-introduction">
+<span id="ble-index"></span><h1>Ble Introduction<a class="headerlink" href="#ble-introduction" title="永久链接至标题"></a></h1>
+<div class="section" id="section-1">
+<h2>总览<a class="headerlink" href="#section-1" title="永久链接至标题"></a></h2>
 <p>本示例主要介绍如何使用ble。</p>
 </div>
-<div class="section" id="id2">
-<h2>使用步骤<a class="headerlink" href="#id2" title="永久链接至标题"></a></h2>
+<div class="section" id="section-2">
+<h2>使用步骤<a class="headerlink" href="#section-2" title="永久链接至标题"></a></h2>
 <ul class="simple">
-<li>对于BL602，进入 <code class="docutils literal notranslate"><span class="pre">customer_app/bl602_demo_event</span></code> 工程中，用脚本 <code class="docutils literal notranslate"><span class="pre">genromap</span></code> 编译，完成后下载Bin文件；使用 <code class="docutils literal notranslate"><span class="pre">stack_ble</span></code> 命令使能ble。</li>
-<li>对于BL702，进入 <code class="docutils literal notranslate"><span class="pre">customer_app/bl702_demo_event</span></code> 工程中，用脚本 <code class="docutils literal notranslate"><span class="pre">genblem1s1</span></code> 编译，完成后下载Bin文件；demo中已使能ble。</li>
-<li>对于BL702L，进入 <code class="docutils literal notranslate"><span class="pre">customer_app/bl702l_demo_ble_peripheral</span></code> 工程中，用脚本 <code class="docutils literal notranslate"><span class="pre">genblem1s1p</span></code> 编译，完成后下载Bin文件；demo中已使能ble，开始adv，并进入低功耗模式；可以通过输入长度超过10bytes的任意cli命令将BL702L唤醒，该cli命令只唤醒BL702L，并不会执行，唤醒后BL702L不再主动进入低功耗模式。此时如果不需要发adv，可以通过输入cli命令ble_stop_adv关闭adv。通过输入cli命令pds_start让BL702L进入低功耗模式。</li>
+<li>对于BL602，进入 <code class="docutils literal notranslate"><span class="pre">customer_app/bl602_demo_event</span></code> 工程中，用脚本 <code class="docutils literal notranslate"><span class="pre">genromap</span></code> 编译，完成后下载Bin文件；使用 <code class="docutils literal notranslate"><span class="pre">stack_ble</span></code> 命令使能ble。该Demo默认没有开启任何Ble的行为，如果需要做Ble advertising或者ble scan或者主动建立Ble连接，请参考Cli命令发起相应的Ble行为。</li>
+<li>对于BL702，进入 <code class="docutils literal notranslate"><span class="pre">customer_app/bl702_demo_event</span></code> 工程中，用脚本 <code class="docutils literal notranslate"><span class="pre">genblem1s1</span></code> 编译，完成后下载Bin文件；demo中已使能ble。该Demo默认没有开启任何Ble的行为，如果需要做Ble advertising或者ble scan或者主动建立Ble连接，请参考Cli命令发起相应的Ble行为。</li>
+<li>对于BL702L，进入 <code class="docutils literal notranslate"><span class="pre">customer_app/bl702l_demo_ble_peripheral</span></code> 工程中，用脚本 <code class="docutils literal notranslate"><span class="pre">genblem1s1p</span></code> 编译，完成后下载Bin文件；demo中已使能ble，开始adv，并进入低功耗模式；可以通过输入长度超过10bytes的任意cli命令将BL702L唤醒，该cli命令只唤醒BL702L，并不会执行，唤醒后BL702L不再主动进入低功耗模式。此时如果不需要发adv，可以通过输入cli命令 <code class="docutils literal notranslate"><span class="pre">ble_stop_adv</span></code> 关闭adv。通过输入cli命令 <code class="docutils literal notranslate"><span class="pre">pds_start</span></code> 让BL702L进入低功耗模式。</li>
 </ul>
 <p>以下命令BL602, BL702, BL702L共用。</p>
 <ul>
@@ -466,15 +466,13 @@
 <h3><code class="docutils literal notranslate"><span class="pre">ble_unpair</span></code><a class="headerlink" href="#ble-unpair" title="永久链接至标题"></a></h3>
 <blockquote>
 <div><ul class="simple">
-<li>命令功能：清除配对key</li>
+<li>命令功能：清除配对信息</li>
 <li>第一个参数表示设备地址类型</li>
 </ul>
 <blockquote>
 <div><ul class="simple">
 <li>0：设备表示public地址类型</li>
 <li>1：表示设备地址为random类型</li>
-<li>2：表示设备地址为可解析的地址或者Public地址</li>
-<li>3：表示设备地址为可解析的地址或者random地址</li>
 </ul>
 </div></blockquote>
 <ul>
@@ -502,7 +500,6 @@
 <li>0：adv_ind 可连接可被扫描;</li>
 <li>1：adv_scan_ind 不可被连接可被扫描;</li>
 <li>2：adv_nonconn_ind 不可被连接不可被扫描;</li>
-<li>3：adv_direct_ind 可被指定的设备连接不可被扫描</li>
 </ul>
 </div></blockquote>
 <ul class="simple">
@@ -566,10 +563,8 @@
 </ul>
 <blockquote>
 <div><ul class="simple">
-<li>0：表示不启用重复过滤</li>
-<li>1：表示启用重复过滤</li>
-<li>2：仅仅接收白名单列表发起的广播和scan response包，除了指定连接地址不是自己的adv_direct_ind广播包</li>
-<li>4：使用扩展过滤策略，过滤设备</li>
+<li>bit0：1:过滤重复的包; 0:不过滤重复的包</li>
+<li>bit1：1:使用白名单过滤; 0:不使用白名单过滤</li>
 </ul>
 </div></blockquote>
 <ul>
@@ -683,8 +678,6 @@
 </li>
 <li><p class="first">参数：需要设置的设备名字</p>
 </li>
-<li><p class="first">参数：无</p>
-</li>
 <li><p class="first">示例：输入命令 <code class="docutils literal notranslate"><span class="pre">ble_set_device_name</span> <span class="pre">bl602</span></code></p>
 <blockquote>
 <div><div class="figure">
@@ -719,9 +712,9 @@
 <div><ul>
 <li><p class="first">命令功能：设置ADV通道</p>
 </li>
-<li><p class="first">参数：需要设定的ADV通道数，其值范围为1-7，参数大小为1byte，bit0代表通道37，bit1代表通道38，bit2代表通道39</p>
+<li><p class="first">参数：需要设定的ADV通道数，参数大小为1byte，bit0代表通道37，bit1代表通道38，bit2代表通道39</p>
 </li>
-<li><p class="first">示例：输入命令 <code class="docutils literal notranslate"><span class="pre">ble_set_adv_channel</span> <span class="pre">4</span></code></p>
+<li><p class="first">示例：输入命令 <code class="docutils literal notranslate"><span class="pre">ble_set_adv_channel</span> <span class="pre">7</span></code></p>
 <blockquote>
 <div><div class="figure">
 <img alt="" src="../../../_images/image16.png" />
@@ -740,7 +733,7 @@
 </ul>
 <blockquote>
 <div><ul class="simple">
-<li>0：设备表示public地址类型</li>
+<li>0：表示设备地址为rpublic类型</li>
 <li>1：表示设备地址为random类型</li>
 <li>2：表示设备地址为可解析的地址或者Public地址</li>
 <li>3：表示设备地址为可解析的地址或者random地址</li>
@@ -770,8 +763,6 @@
 <div><ul class="simple">
 <li>0：设备表示public地址类型</li>
 <li>1：表示设备地址为random类型</li>
-<li>2：表示设备地址为可解析的地址或者Public地址</li>
-<li>3：表示设备地址为可解析的地址或者random地址</li>
 </ul>
 </div></blockquote>
 <ul>
@@ -798,8 +789,6 @@
 <div><ul class="simple">
 <li>0：设备表示public地址类型</li>
 <li>1：表示设备地址为random类型</li>
-<li>2：表示设备地址为可解析的地址或者Public地址</li>
-<li>3：表示设备地址为可解析的地址或者random地址</li>
 </ul>
 </div></blockquote>
 <ul>
@@ -893,7 +882,7 @@
 <h3><code class="docutils literal notranslate"><span class="pre">ble_exchange_mtu</span></code><a class="headerlink" href="#ble-exchange-mtu" title="永久链接至标题"></a></h3>
 <blockquote>
 <div><ul>
-<li><p class="first">命令功能：交换mtu大小</p>
+<li><p class="first">命令功能：将ATT MTU Size设置到双方设备能够支持的最大值。</p>
 </li>
 <li><p class="first">参数： 无</p>
 </li>
@@ -916,15 +905,15 @@
 </ul>
 <blockquote>
 <div><ul class="simple">
-<li>0：primary</li>
-<li>1：secondary</li>
+<li>0：primary services</li>
+<li>1：secondary services</li>
 <li>2：include</li>
 <li>3：Characteristic</li>
 <li>4：Descriptor</li>
 </ul>
 </div></blockquote>
 <ul>
-<li><p class="first">第二个参数表示2BYTES的uuid</p>
+<li><p class="first">第二个参数表示2BYTES的UUID.当查询类型是0或者1的时候，才会使用UUID。如果UUID为0，查询所有的primary services或者secondary services. 如果UUID非0，查询UUID代表的service</p>
 </li>
 <li><p class="first">第三个参数表示起始句柄，占2BYTES</p>
 </li>
@@ -970,7 +959,7 @@
 </li>
 <li><p class="first">第二个参数表示偏移量，占2bytes</p>
 </li>
-<li><p class="first">第三个参数表示数据长度，占2bytes,最大不超过512</p>
+<li><p class="first">第三个参数表示数据长度，占2bytes</p>
 </li>
 <li><p class="first">第四个参数表示需要写入的数据</p>
 </li>
@@ -1000,7 +989,7 @@
 <ul>
 <li><p class="first">第二个参数表示句柄，占2bytes，</p>
 </li>
-<li><p class="first">第三个参数表示数据的长度，占2bytes，最大不超过512</p>
+<li><p class="first">第三个参数表示数据的长度，占2bytes</p>
 </li>
 <li><p class="first">第四个参数表示写入的数据</p>
 </li>
@@ -1176,7 +1165,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../',
-            VERSION:'release_bl_iot_sdk_1.6.40-1278-gd5108915c',
+            VERSION:'release_bl_iot_sdk_1.6.40-1605-g2706c9d81',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,
