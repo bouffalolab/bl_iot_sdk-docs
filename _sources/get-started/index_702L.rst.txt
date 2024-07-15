@@ -44,10 +44,35 @@ BL IOT SDK 开发指南
 
   在正式开始编译工程前，请先正确完成以下所有工具的安装，具体步骤以及环境变量设置如下: 
 
-    - **MSYS2**  `MSYS32 Windows平台安装与编译 <./Developer_Environment_BL702/Windows-BL702/Quickstart_Windows_msys.html>`__ 
-    - **BLDevCube** `BLDevCube 固件烧录 <./Developer_Environment_BL702/BLFlashEnv/Burning_process.html>`__ 
-
     .. important::  请您留意文档中，关于环境变量、驱动等信息的设置，这将避免后续操作的异常错误
+
+1. 编译环境的建立
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+-  `获取MSYS2安装包和安装步骤 <https://www.msys2.org/>`__
+
+-  打开MSYS2并安装make，输入命令：\ ``pacman -S make``
+   后回车，并根据提示直到安装完成
+
+   .. figure:: ./Developer_Environment_BL702/Windows-BL702/imgs/image1.png
+      :alt:
+
+   .. figure:: ./Developer_Environment_BL702/Windows-BL702/imgs/image2.png
+      :alt:
+
+2. 设置环境变量
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+-  使用gcc进行编译，需要在MSYS2中将gcc添加至环境变量，方法如下：
+
+	1.（推荐）在MSYS2的启动文件 home/xxx/.bash_profile 中添加如下指令：
+	\ ``export PATH=/yyy/zzz/toolchain/riscv/MSYS/bin:$PATH``
+
+	2.（不推荐，每次MSYS2重启需要重复该操作）在MSYS2命令行中，直接输入如下指令：
+	\ ``PATH=/yyy/zzz/toolchain/riscv/MSYS/bin:$PATH``
+
+	注：这里需要根据用户gcc所在实际路径替换上述yyy、zzz，例如
+	\ ``PATH=/d/Work/Code/bl_iot_sdk/toolchain/riscv/MSYS/bin:$PATH``
 
 编译工程
 -----------
@@ -225,7 +250,7 @@ BL IOT SDK 开发指南
           :width: 4in
           :height: 2in
 
-    3.6 如果想查看当前代码运行情况，请选择 ``bl_iot_sdk_debug_freedom_studio_win_attach_bl702l.launch``；如果想从头执行代码，请选择 ``bl_iot_sdk_debug_freedom_studio_win_bl702l.launch``
+    3.6 如果想查看当前代码运行情况，请选择 ``bl_iot_sdk_debug_freedom_studio_win_attach_bl702l.launch``；如果想从头执行代码，请选择 ``bl_iot_sdk_debug_freedom_studio_win_bl702l.launch``。点击 ``Browse`` 按钮更换elf文件，点击 ``Debug`` 按钮开始调试。
 
         .. figure:: ./imgs/image6.png
           :align: center
@@ -233,4 +258,6 @@ BL IOT SDK 开发指南
           :height: 4.8in
 
         .. important::  使用 bl_iot_sdk_debug_freedom_studio_win_bl702l.launch 前需要让芯片进入烧写模式
+
+        .. important::  由于低功耗固件会进低功耗模式造成JTAG不通，因此不可以使用bl_iot_sdk_debug_freedom_studio_win_attach_bl702l.launch进行调试
 
